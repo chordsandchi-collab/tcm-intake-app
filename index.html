@@ -1,142 +1,274 @@
-<h1>Patient Intake Form</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TCM Intake Self-Assessment</title>
 
-<form>
+<style>
 
-<h2>Personal Information</h2>
-Full Name:<br>
-<input type="text"><br><br>
+body{
+font-family: Arial;
+max-width:800px;
+margin:auto;
+padding:20px;
+background:#f6f6f6;
+}
 
-Date of Birth:<br>
-<input type="date"><br><br>
+h1,h2{
+color:#2f4f4f;
+}
 
-Phone:<br>
-<input type="text"><br><br>
+.section{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:8px;
+}
 
-Email:<br>
-<input type="email"><br><br>
+button{
+padding:12px;
+font-size:16px;
+background:#2f4f4f;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
 
-Occupation:<br>
-<input type="text"><br><br>
+.result{
+background:#e8f5e9;
+padding:20px;
+margin-top:20px;
+border-radius:8px;
+}
 
-
-<h2>Main Health Concern</h2>
-
-What brings you here today?<br>
-<textarea></textarea><br><br>
-
-When did the problem begin?<br>
-<input type="text"><br><br>
-
-How severe is the problem (1-10)?<br>
-<input type="number"><br><br>
-
-What makes it worse?<br>
-<textarea></textarea><br><br>
-
-What makes it better?<br>
-<textarea></textarea><br><br>
-
-
-<h2>General Health</h2>
-
-Energy level:<br>
-<select>
-<option>Very low</option>
-<option>Low</option>
-<option>Moderate</option>
-<option>Good</option>
-<option>Excellent</option>
-</select><br><br>
-
-Sleep quality:<br>
-<select>
-<option>Poor</option>
-<option>Average</option>
-<option>Good</option>
-</select><br><br>
-
-Hours of sleep:<br>
-<input type="number"><br><br>
-
-Stress level (1-10):<br>
-<input type="number"><br><br>
+</style>
+</head>
 
 
-<h2>Temperature</h2>
+<body>
 
-Do you feel mostly:<br>
-<select>
-<option>Cold</option>
-<option>Warm</option>
-<option>Alternating hot and cold</option>
-<option>Normal</option>
-</select><br><br>
+<h1>TCM Health Self-Assessment</h1>
 
+<p>
+Answer the following questions to explore possible Traditional Chinese Medicine patterns.
+</p>
+
+
+<form id="tcmForm">
+
+<div class="section">
+
+<h2>Energy</h2>
+
+<select id="energy">
+<option value="">Select</option>
+<option value="low">Very low</option>
+<option value="crash">Energy crashes later</option>
+<option value="stable">Stable energy</option>
+</select>
+
+</div>
+
+
+<div class="section">
+
+<h2>Stress / Emotional State</h2>
+
+<select id="stress">
+<option value="">Select</option>
+<option value="irritable">Irritable / frustrated</option>
+<option value="anxious">Anxious</option>
+<option value="calm">Calm</option>
+</select>
+
+</div>
+
+
+<div class="section">
 
 <h2>Digestion</h2>
 
-Appetite:<br>
-<select>
-<option>Poor</option>
-<option>Normal</option>
-<option>Strong</option>
-</select><br><br>
+<select id="digestion">
+<option value="">Select</option>
+<option value="bloating">Bloating after meals</option>
+<option value="loose">Loose stools</option>
+<option value="normal">Normal digestion</option>
+</select>
 
-Bloating:<br>
-<select>
-<option>Yes</option>
-<option>No</option>
-</select><br><br>
-
-Acid reflux:<br>
-<select>
-<option>Yes</option>
-<option>No</option>
-</select><br><br>
+</div>
 
 
-<h2>Bowel Movements</h2>
+<div class="section">
 
-<select>
-<option>Constipation</option>
-<option>Normal</option>
-<option>Loose stool</option>
-<option>Diarrhea</option>
-</select><br><br>
+<h2>Temperature Preference</h2>
 
+<select id="temperature">
+<option value="">Select</option>
+<option value="cold">Often cold</option>
+<option value="hot">Often hot</option>
+<option value="normal">Normal</option>
+</select>
 
-<h2>Urination</h2>
-
-<select>
-<option>Frequent</option>
-<option>Normal</option>
-<option>Dark urine</option>
-<option>Painful urination</option>
-</select><br><br>
+</div>
 
 
-<h2>Emotional Health</h2>
+<div class="section">
 
-<select>
-<option>Calm</option>
-<option>Anxiety</option>
-<option>Irritability</option>
-<option>Depression</option>
-<option>Mood swings</option>
-</select><br><br>
+<h2>Sleep</h2>
+
+<select id="sleep">
+<option value="">Select</option>
+<option value="13am">Wake between 1-3am</option>
+<option value="insomnia">Difficulty sleeping</option>
+<option value="good">Sleep well</option>
+</select>
+
+</div>
 
 
-<h2>Medical History</h2>
+<div class="section">
 
-Current medications:<br>
-<textarea></textarea><br><br>
+<h2>Pain / Tension</h2>
 
-Past illnesses or surgeries:<br>
-<textarea></textarea><br><br>
+<select id="pain">
+<option value="">Select</option>
+<option value="neck">Neck / shoulder tension</option>
+<option value="headache">Headaches</option>
+<option value="none">None</option>
+</select>
 
-Allergies:<br>
-<textarea></textarea><br><br>
+</div>
 
-<button type="submit">Submit Intake</button>
+
+<button type="button" onclick="analyze()">Generate TCM Pattern Insight</button>
 
 </form>
+
+
+
+<div id="result" class="result" style="display:none"></div>
+
+
+<script>
+
+function analyze(){
+
+let result="";
+
+let energy=document.getElementById("energy").value;
+let stress=document.getElementById("stress").value;
+let digestion=document.getElementById("digestion").value;
+let temperature=document.getElementById("temperature").value;
+let sleep=document.getElementById("sleep").value;
+let pain=document.getElementById("pain").value;
+
+
+/* Liver Qi Stagnation */
+
+if(
+(stress==="irritable") &&
+(pain==="neck" || sleep==="13am")
+){
+
+result+=`
+<h2>Possible Pattern: Liver Qi Stagnation</h2>
+
+Common signs include stress, irritability, neck tension, and symptoms worsening during emotional strain.
+
+<h3>Example acupuncture points</h3>
+<ul>
+<li>LV3 – Taichong</li>
+<li>LI4 – Hegu</li>
+<li>GB34 – Yanglingquan</li>
+<li>PC6 – Neiguan</li>
+</ul>
+`;
+
+}
+
+
+/* Spleen Qi Deficiency */
+
+if(
+(energy==="low" || energy==="crash") &&
+(digestion==="bloating" || digestion==="loose")
+){
+
+result+=`
+<h2>Possible Pattern: Spleen Qi Deficiency</h2>
+
+This pattern may present with fatigue, digestive weakness, and low energy after eating.
+
+<h3>Example acupuncture points</h3>
+<ul>
+<li>ST36 – Zusanli</li>
+<li>SP6 – Sanyinjiao</li>
+<li>CV12 – Zhongwan</li>
+<li>BL20 – Pishu</li>
+</ul>
+`;
+
+}
+
+
+/* Kidney Yang Deficiency */
+
+if(
+temperature==="cold" && energy==="low"
+){
+
+result+=`
+<h2>Possible Pattern: Kidney Yang Deficiency</h2>
+
+Common indicators include feeling cold frequently, fatigue, and low vitality.
+
+<h3>Example acupuncture points</h3>
+<ul>
+<li>KD3 – Taixi</li>
+<li>BL23 – Shenshu</li>
+<li>CV4 – Guanyuan</li>
+<li>DU4 – Mingmen</li>
+</ul>
+`;
+
+}
+
+
+/* default */
+
+if(result===""){
+result="<h2>No strong pattern detected.</h2><p>Further clinical assessment is recommended.</p>";
+}
+
+
+/* disclaimer */
+
+result+=`
+
+<hr>
+
+<p style="font-size:14px;color:#555">
+
+These impressions are generated automatically based on the answers you provided and are intended for educational purposes only.
+
+They do not constitute a medical diagnosis or treatment plan.
+
+Traditional Chinese Medicine diagnosis requires in-person evaluation including tongue observation, pulse palpation, and clinical assessment by a licensed acupuncture or TCM practitioner.
+
+Please schedule an appointment for a comprehensive consultation and personalized acupuncture treatment plan.
+
+</p>
+
+`;
+
+
+document.getElementById("result").innerHTML=result;
+document.getElementById("result").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
