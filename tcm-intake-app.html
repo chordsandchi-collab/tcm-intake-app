@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TCM Intake Free App - Tapati Acu-Yoga</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: auto; padding: 20px; }
+        form { display: none; }
+        .section { margin: 20px 0; }
+        button { padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; margin: 5px; }
+        #result, #rx { background: #f0f8ff; padding: 20px; border-radius: 8px; display: none; }
+        #langToggle { position: fixed; top: 10px; right: 10px; }
+        .embed { height: 600px; width: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <button id="langToggle" onclick="toggleLang()">Tagalog</button>
+    <h1 id="title">TCM Patient Intake (Free)</h1>
+    <p id="intro">Fill for syndrome overview. Free—book in-person for full Rx.</p>
+
+    <div id="startBtn"><button onclick="showForm()">Start / Simulan</button></div>
+
+    <form id="intakeForm">
+        <div class="section">
+            <h3 id="personalH">Personal Info / Impormasyon</h3>
+            <input type="text" id="name" placeholder="Name / Pangalan" required><br><br>
+            <input type="email" id="email" placeholder="Email" required><br><br>
+            <input type="tel" id="phone" placeholder="Phone / Telepono"><br><br>
+        </div>
+
+        <div class="section">
+            <h3 id="symptomsH">Symptoms / Sintomas (0-10 or Yes/No)</h3>
+            <label id="fatigueL">Fatigue / Pagod (0-10): <input type="number" id="fatigue" min="0" max="10"></label><br>
+            <label id="digestionL">Digestive issues / Tiyan (Yes/No): <select id="digestion"><option>No/Hindi</option><option>Yes-Bloating/Paglobo</option><option>Yes-Diarrhea/Pagdidumi</option></select></label><br>
+            <label id="emotionsL">Irritability/Anxiety / Galit/Panlinlang: <select id="emotions"><option>No/Hindi</option><option>Yes/Oo</option></select></label><br>
+            <label id="painL">Pain (location) / Sakit (lugar): <input type="text" id="pain" placeholder="e.g., lower back / likod"></label><br>
+            <label id="sleepL">Sleep (0-10) / Tulog: <input type="number" id="sleep" min="0" max="10"></label><br>
+            <label id="coldL">Cold hands/feet? / Mababad na kamay/paa?: <select id="cold"><option>No</option><option>Yes</option></select></label><br>
+            <label id="thirstL">Thirst / Uhaw: <select id="thirst"><option>No</option><option>Yes - much</option></select></label>
+            <!-- Add more from your charts -->
+        </div>
+
+        <button type="button" onclick="analyze()">Submit / Isumite</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="rx"></div>
+    <div id="booking">
+        <h3 id="bookH">Book Free Consult / Mag-book ng Consult</h3>
+        <iframe src="https://calendly.com/yourusername/acupuncture?embed=true" class="embed"></iframe> <!-- Replace with your free Calendly -->
+        <br><button onclick="downloadPDF()">Download PDF Summary / I-download PDF</button>
+    </div>
+
+    <script>
+        let isTagalog = false;
+        const translations = {
+            title: {en: 'TCM Patient Intake (Free)', tl: 'TCM Intake Form (Libre)'},
+            intro: {en: 'Fill for syndrome overview. Free—book in-person for full Rx.', tl: 'Punan para sa syndrome overview. Libre—mag-book ng personal para sa full Rx.'},
+            // Add more keys for labels, results
+        };
+
+        function toggleLang() {
+            isTagalog = !isTagalog;
+            document.getElementById('langToggle').textContent = isTagalog ? 'English' : 'Tagalog';
+            translatePage();
+            // Fetch from Google Translate API for dynamic text [web:25]
+            const texts = document.querySelectorAll('h1,h3,label,p');
+            texts.forEach(el => {
+                if (el.textContent) {
+                    el.textContent = translateText(el.textContent, isTagalog ? 'tl' : 'en');
+                }
+            });
+        }
+
+        async function translateText(text, targetLang) {
+            try {
+                const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURI(text)}`);
+                const data = await res.json();
+                return data[0][0][0]; // Free API extract [web:25]
+            } catch (e) {
+                return text; // Fallback
+            }
+        }
+
+        function translatePage() {
+            // Update static keys
+            document.getElementById('title').textContent = translations.title[isTagalog ? 'tl' : 'en'];
+            // Extend for all elements
+        }
+
+        function showForm() {
+            document.getElementById('intakeForm').style.display = 'block';
+            document.getElementById('startBtn').style.display = 'none';
+        }
+
+        function analyze() {
+            // Enhanced scoring [web:2][cite:24]
+            const fatigue = parseInt(document.getElementById('fatigue').value) || 0;
+            const digestion = document.getElementById('digestion').value;
+            const emotions = document.getElementById('emotions').value;
+            const sleep = parseInt(document.getElementById('sleep').value) || 0;
+            const cold = document.getElementById('cold').value;
+            const thirst = document.getElementById('thirst').value;
+
+            let scoreQiDef = fatigue + (digestion.includes('Yes') ? 5 : 0) + (sleep < 5 ? 3 : 0) + (cold === 'Yes' ? 2 : 0);
+            let scoreYinDef = sleep + (emotions === 'Yes' ? 4 : 0) + (thirst.includes('much') ? 3 : 0);
+            let scoreYangDef = cold === 'Yes' ? 6 : 0;
+
+            let topSyndrome = scoreQiDef > scoreYinDef && scoreQiDef > scoreYangDef ? 'Spleen Qi Deficiency' :
+                              scoreYinDef > scoreYangDef ? 'Yin Deficiency' : 'Yang Deficiency';
+
+            const layTerm = isTagalog ? `Mahinang Spleen Qi (pagod, hindi makadigesto)` : `Spleen Qi Deficiency (fatigue, poor digestion)`;
+
+            document.getElementById('result').innerHTML = `
+                <h3>Overview / Pangkalahatang-ideya</h3>
+                <p>${document.getElementById('name').value}, suggests <strong>${topSyndrome}</strong>: ${layTerm} (Deadman/Maciocia/Penner).[web:2][web:3]</p>
+            `;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('rx').innerHTML = `
+                <h3>Semi Rx / Hudyat</h3>
+                <p>Points: ST36, SP6 (tonify). Confirm pulse/tongue in-person.</p>
+            `;
+            document.getElementById('rx').style.display = 'block';
+            document.getElementById('booking').style.display = 'block';
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text('TCM Summary', 10, 10);
+            doc.text(document.getElementById('result').textContent, 10, 20);
+            doc.text(document.getElementById('rx').textContent, 10, 40);
+            doc.save('tcm-intake.pdf');[web:29]
+        }
+    </script>
+</body>
+</html>
