@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TCM Patient Intake</title>
+<title>CHORDS & CHI – TCM Intake</title>
 
 <style>
 
@@ -11,7 +11,7 @@ font-family:Arial;
 max-width:900px;
 margin:auto;
 padding:20px;
-background:#f5f5f5;
+background:#f4f4f4;
 }
 
 .section{
@@ -21,8 +21,11 @@ margin-bottom:20px;
 border-radius:8px;
 }
 
-h1{
-color:#2c4c4c;
+input,select,textarea{
+width:100%;
+padding:8px;
+margin-top:5px;
+margin-bottom:15px;
 }
 
 button{
@@ -38,51 +41,66 @@ cursor:pointer;
 .result{
 background:#e8f5e9;
 padding:20px;
-border-radius:8px;
 margin-top:20px;
+border-radius:8px;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-<h1>TCM Patient Intake & Self-Assessment</h1>
+<h1>CHORDS & CHI – Acupuncture Intake</h1>
 
-<p>Please complete this intake questionnaire before your consultation.</p>
-
-<form id="form">
+<form>
 
 <div class="section">
 
 <h2>Patient Information</h2>
 
-Name<br>
-<input id="name"><br><br>
+Email
+<input id="email">
 
-Age<br>
-<input id="age"><br><br>
+Name
+<input id="name">
 
-Phone<br>
-<input id="phone"><br><br>
+Date of Birth
+<input id="dob">
 
-Chief Complaint<br>
-<textarea id="complaint"></textarea>
+Contact
+<input id="contact">
+
+Address
+<textarea id="address"></textarea>
+
+Gender
+<input id="gender">
+
+Occupation
+<input id="occupation">
 
 </div>
 
 
 <div class="section">
 
-<h2>Energy</h2>
+<h2>Main Health Concern</h2>
 
-<select id="energy">
+<textarea id="concern"></textarea>
+
+</div>
+
+
+<div class="section">
+
+<h2>Body Temperature</h2>
+
+<select id="temperature">
 <option value="">Select</option>
-<option value="low">Persistent fatigue</option>
-<option value="crash">Fatigue after eating</option>
-<option value="normal">Normal energy</option>
+<option>Cold</option>
+<option>Hot</option>
+<option>Both</option>
 </select>
 
 </div>
@@ -90,13 +108,12 @@ Chief Complaint<br>
 
 <div class="section">
 
-<h2>Digestion</h2>
+<h2>Appetite</h2>
 
-<select id="digestion">
-<option value="">Select</option>
-<option value="bloating">Bloating after meals</option>
-<option value="loose">Loose stools</option>
-<option value="normal">Normal digestion</option>
+<select id="appetite">
+<option>Poor</option>
+<option>Normal</option>
+<option>Strong</option>
 </select>
 
 </div>
@@ -104,14 +121,40 @@ Chief Complaint<br>
 
 <div class="section">
 
-<h2>Stress / Emotional State</h2>
+<h2>Sweating</h2>
 
-<select id="stress">
-<option value="">Select</option>
-<option value="irritable">Irritable / frustrated</option>
-<option value="anxious">Anxious</option>
-<option value="calm">Calm</option>
+<select id="sweat">
+<option>Normal</option>
+<option>Excessive</option>
+<option>Very little</option>
 </select>
+
+</div>
+
+
+<div class="section">
+
+<h2>Urination</h2>
+
+<textarea id="urination"></textarea>
+
+</div>
+
+
+<div class="section">
+
+<h2>Bowel Movements</h2>
+
+<textarea id="bowel"></textarea>
+
+</div>
+
+
+<div class="section">
+
+<h2>Pain</h2>
+
+<textarea id="pain"></textarea>
 
 </div>
 
@@ -120,40 +163,25 @@ Chief Complaint<br>
 
 <h2>Sleep</h2>
 
-<select id="sleep">
-<option value="">Select</option>
-<option value="13am">Wake between 1-3 AM</option>
-<option value="insomnia">Difficulty sleeping</option>
-<option value="good">Sleep well</option>
-</select>
+<textarea id="sleep"></textarea>
 
 </div>
 
 
 <div class="section">
 
-<h2>Temperature Sensation</h2>
+<h2>Energy</h2>
 
-<select id="temp">
-<option value="">Select</option>
-<option value="cold">Often feel cold</option>
-<option value="hot">Often feel hot</option>
-<option value="normal">Normal</option>
-</select>
+<textarea id="energy"></textarea>
 
 </div>
 
 
 <div class="section">
 
-<h2>Pain / Body Tension</h2>
+<h2>Stress or Emotional Concerns</h2>
 
-<select id="pain">
-<option value="">Select</option>
-<option value="neck">Neck / shoulder tension</option>
-<option value="headache">Frequent headaches</option>
-<option value="none">None</option>
-</select>
+<textarea id="stress"></textarea>
 
 </div>
 
@@ -172,39 +200,49 @@ function analyze(){
 
 let liver=0
 let spleen=0
-let kidney=0
+let kidneyYang=0
+let kidneyYin=0
+let bloodDef=0
+let damp=0
+let phlegm=0
+let liverYang=0
 
-let name=document.getElementById("name").value
-let age=document.getElementById("age").value
-let phone=document.getElementById("phone").value
-let complaint=document.getElementById("complaint").value
-
-let energy=document.getElementById("energy").value
-let digestion=document.getElementById("digestion").value
-let stress=document.getElementById("stress").value
-let sleep=document.getElementById("sleep").value
-let temp=document.getElementById("temp").value
-let pain=document.getElementById("pain").value
+let temperature=document.getElementById("temperature").value
+let appetite=document.getElementById("appetite").value
+let energy=document.getElementById("energy").value.toLowerCase()
+let stress=document.getElementById("stress").value.toLowerCase()
+let pain=document.getElementById("pain").value.toLowerCase()
 
 
-if(stress=="irritable") liver++
-if(pain=="neck") liver++
-if(sleep=="13am") liver++
+if(stress.includes("stress")||stress.includes("irritable")) liver++
+if(pain.includes("tension")||pain.includes("rib")) liver++
 
-if(energy=="low") spleen++
-if(energy=="crash") spleen++
-if(digestion=="bloating") spleen++
-if(digestion=="loose") spleen++
+if(appetite=="Poor") spleen++
+if(energy.includes("tired")) spleen++
 
-if(temp=="cold") kidney++
-if(energy=="low") kidney++
+if(temperature=="Cold") kidneyYang++
+if(energy.includes("low")) kidneyYang++
 
-let output=""
+if(temperature=="Hot") kidneyYin++
+if(document.getElementById("sleep").value.includes("night")) kidneyYin++
+
+if(energy.includes("weak")) bloodDef++
+
+if(document.getElementById("bowel").value.includes("loose")) damp++
+
+if(document.getElementById("urination").value.includes("cloudy")) phlegm++
+
+if(document.getElementById("pain").value.includes("headache")) liverYang++
+
+
+let result=""
+
 
 if(liver>=2){
 
-output+=`
-<h2>Possible Pattern: Liver Qi Stagnation</h2>
+result+=`
+
+<h2>Liver Qi Stagnation</h2>
 
 Example acupuncture points:
 
@@ -212,14 +250,16 @@ LV3 – Taichong
 LI4 – Hegu  
 GB34 – Yanglingquan  
 PC6 – Neiguan
+
 `
 
 }
 
 if(spleen>=2){
 
-output+=`
-<h2>Possible Pattern: Spleen Qi Deficiency</h2>
+result+=`
+
+<h2>Spleen Qi Deficiency</h2>
 
 Example acupuncture points:
 
@@ -227,14 +267,16 @@ ST36 – Zusanli
 SP6 – Sanyinjiao  
 CV12 – Zhongwan  
 BL20 – Pishu
+
 `
 
 }
 
-if(kidney>=2){
+if(kidneyYang>=2){
 
-output+=`
-<h2>Possible Pattern: Kidney Yang Deficiency</h2>
+result+=`
+
+<h2>Kidney Yang Deficiency</h2>
 
 Example acupuncture points:
 
@@ -242,19 +284,56 @@ KD3 – Taixi
 BL23 – Shenshu  
 DU4 – Mingmen  
 CV4 – Guanyuan
+
 `
 
 }
 
-if(output==""){
-output="<h2>No strong pattern detected.</h2>"
+if(kidneyYin>=2){
+
+result+=`
+
+<h2>Kidney Yin Deficiency</h2>
+
+Example acupuncture points:
+
+KD6  
+SP6  
+REN4  
+KI3
+
+`
+
 }
 
-output+=`
+if(liverYang>=2){
+
+result+=`
+
+<h2>Liver Yang Rising</h2>
+
+Example acupuncture points:
+
+LV3  
+GB20  
+KD3  
+LI4
+
+`
+
+}
+
+if(result==""){
+
+result="<h2>No strong pattern detected. A full consultation is recommended.</h2>"
+
+}
+
+result+=`
 
 <hr>
 
-<p>
+<p style="font-size:14px">
 
 These impressions are generated automatically based on the answers you provided and are intended for educational purposes only.
 
@@ -265,26 +344,36 @@ Traditional Chinese Medicine diagnosis requires in-person evaluation including t
 Please schedule an appointment for a comprehensive consultation and personalized acupuncture treatment plan.
 
 </p>
+
 `
 
-document.getElementById("result").innerHTML=output
+document.getElementById("result").innerHTML=result
 document.getElementById("result").style.display="block"
 
 
-const data={
-name,
-age,
-phone,
-complaint,
-energy,
-digestion,
-stress,
-sleep,
-temp,
-pain,
-pattern:output
-}
 
+const data={
+
+email:document.getElementById("email").value,
+name:document.getElementById("name").value,
+dob:document.getElementById("dob").value,
+contact:document.getElementById("contact").value,
+address:document.getElementById("address").value,
+gender:document.getElementById("gender").value,
+occupation:document.getElementById("occupation").value,
+concern:document.getElementById("concern").value,
+temperature,
+appetite,
+sweat:document.getElementById("sweat").value,
+urination:document.getElementById("urination").value,
+bowel:document.getElementById("bowel").value,
+pain,
+sleep:document.getElementById("sleep").value,
+energy,
+stress,
+pattern:result
+
+}
 
 fetch("https://script.google.com/macros/s/AKfycbxs6hnnBihs9C5FfxavmOsnJ06nL2bD9Yxy4s_6JRhYaWwaIe0aSTy_qhkqgQH_8Uu8/exec",{
 method:"POST",
