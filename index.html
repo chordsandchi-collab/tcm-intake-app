@@ -1,8 +1,8 @@
-<h1>TCM Patient Intake Form</h1>
+<h1>TCM Clinical Intake Form</h1>
 
 <form>
 
-<h2>Basic Information</h2>
+<h2>Patient Information</h2>
 Full Name:<br>
 <input type="text"><br><br>
 
@@ -12,95 +12,23 @@ Date of Birth:<br>
 Age:<br>
 <input type="number"><br><br>
 
-Gender:<br>
-<input type="text"><br><br>
-
-Occupation:<br>
-<input type="text"><br><br>
-
-Phone Number:<br>
+Phone:<br>
 <input type="text"><br><br>
 
 Email:<br>
 <input type="email"><br><br>
 
 
-<h2>Main Health Concern</h2>
+<h2>Chief Complaint</h2>
 
-What is your main health concern?<br>
+Main health concern:<br>
 <textarea></textarea><br><br>
 
-When did this problem begin?<br>
+When did this condition begin?<br>
 <input type="text"><br><br>
 
-Have you received a diagnosis from a doctor?<br>
-<input type="text"><br><br>
-
-What treatments have you tried?<br>
+What makes it better or worse?<br>
 <textarea></textarea><br><br>
-
-
-<h2>General Health</h2>
-
-Energy level:<br>
-<input type="text"><br><br>
-
-Sleep quality:<br>
-<input type="text"><br><br>
-
-Hours of sleep per night:<br>
-<input type="number"><br><br>
-
-Stress level (1-10):<br>
-<input type="number"><br><br>
-
-
-<h2>Temperature & Sweating</h2>
-
-Do you feel cold or hot easily?<br>
-<input type="text"><br><br>
-
-Do you sweat easily?<br>
-<input type="text"><br><br>
-
-Night sweats?<br>
-<input type="text"><br><br>
-
-
-<h2>Digestion</h2>
-
-Appetite:<br>
-<input type="text"><br><br>
-
-Bloating or gas?<br>
-<input type="text"><br><br>
-
-Acid reflux?<br>
-<input type="text"><br><br>
-
-Food cravings:<br>
-<input type="text"><br><br>
-
-
-<h2>Bowel Movements</h2>
-
-Frequency:<br>
-<input type="text"><br><br>
-
-Consistency:<br>
-<input type="text"><br><br>
-
-
-<h2>Urination</h2>
-
-Frequency per day:<br>
-<input type="text"><br><br>
-
-Color of urine:<br>
-<input type="text"><br><br>
-
-Pain during urination?<br>
-<input type="text"><br><br>
 
 
 <h2>Pain Assessment</h2>
@@ -108,68 +36,181 @@ Pain during urination?<br>
 Location of pain:<br>
 <input type="text"><br><br>
 
-Pain level (1-10):<br>
+Pain intensity (1-10):<br>
 <input type="number"><br><br>
 
-Type of pain (sharp, dull, throbbing):<br>
-<input type="text"><br><br>
+Pain type:<br>
+<select>
+<option>Sharp</option>
+<option>Dull</option>
+<option>Throbbing</option>
+<option>Burning</option>
+<option>Stabbing</option>
+</select><br><br>
 
 
-<h2>Emotional Health</h2>
+<h2>General Health</h2>
 
-Do you experience anxiety?<br>
-<input type="text"><br><br>
+Energy level:<br>
+<select>
+<option>Low</option>
+<option>Moderate</option>
+<option>High</option>
+</select><br><br>
 
-Do you experience depression?<br>
-<input type="text"><br><br>
+Sleep quality:<br>
+<select>
+<option>Poor</option>
+<option>Average</option>
+<option>Good</option>
+</select><br><br>
 
-Do you experience irritability or anger?<br>
-<input type="text"><br><br>
+Hours of sleep:<br>
+<input type="number"><br><br>
+
+
+<h2>Temperature Preference</h2>
+
+<select>
+<option>Often cold</option>
+<option>Often hot</option>
+<option>Alternating hot and cold</option>
+<option>Normal</option>
+</select><br><br>
+
+
+<h2>Digestion</h2>
+
+Appetite:<br>
+<select>
+<option>Poor</option>
+<option>Normal</option>
+<option>Strong</option>
+</select><br><br>
+
+Bloating:<br>
+<select>
+<option>Yes</option>
+<option>No</option>
+</select><br><br>
+
+Acid reflux:<br>
+<select>
+<option>Yes</option>
+<option>No</option>
+</select><br><br>
+
+
+<h2>Bowel Movements</h2>
+
+<select>
+<option>Constipation</option>
+<option>Normal</option>
+<option>Loose stool</option>
+<option>Diarrhea</option>
+</select><br><br>
+
+
+<h2>Urination</h2>
+
+<select>
+<option>Frequent</option>
+<option>Normal</option>
+<option>Dark urine</option>
+<option>Painful urination</option>
+</select><br><br>
+
+
+<h2>Emotional State</h2>
+
+<select>
+<option>Calm</option>
+<option>Anxiety</option>
+<option>Irritability</option>
+<option>Depression</option>
+<option>Mood swings</option>
+</select><br><br>
 
 
 <h2>Women's Health (if applicable)</h2>
 
-Are your periods regular?<br>
-<input type="text"><br><br>
-
-Date of last menstruation:<br>
-<input type="date"><br><br>
-
-Any menstrual pain or clots?<br>
-<input type="text"><br><br>
-
-Are you pregnant?<br>
-<input type="text"><br><br>
+Menstrual cycle:<br>
+<select>
+<option>Regular</option>
+<option>Irregular</option>
+<option>Painful</option>
+<option>Heavy bleeding</option>
+</select><br><br>
 
 
-<h2>Medical History</h2>
+<h2>Tongue Diagnosis</h2>
 
-Current medications:<br>
-<textarea></textarea><br><br>
+Tongue color:<br>
+<select>
+<option>Pale</option>
+<option>Pink</option>
+<option>Red</option>
+<option>Dark purple</option>
+</select><br><br>
 
-Past illnesses or surgeries:<br>
-<textarea></textarea><br><br>
+Tongue coating:<br>
+<select>
+<option>Thin white</option>
+<option>Thick white</option>
+<option>Yellow coating</option>
+<option>No coating</option>
+</select><br><br>
 
-Allergies:<br>
-<textarea></textarea><br><br>
-
-
-<h2>Lifestyle</h2>
-
-Exercise frequency:<br>
-<input type="text"><br><br>
-
-Diet type:<br>
-<input type="text"><br><br>
-
-Alcohol consumption:<br>
-<input type="text"><br><br>
-
-Smoking:<br>
-<input type="text"><br><br>
+Tongue shape:<br>
+<select>
+<option>Normal</option>
+<option>Swollen</option>
+<option>Thin</option>
+<option>Cracked</option>
+<option>Scalloped</option>
+</select><br><br>
 
 
-<br>
-<button type="submit">Submit Intake Form</button>
+<h2>Pulse Diagnosis</h2>
+
+<select>
+<option>Floating</option>
+<option>Deep</option>
+<option>Rapid</option>
+<option>Slow</option>
+<option>Wiry</option>
+<option>Slippery</option>
+<option>Weak</option>
+</select><br><br>
+
+
+<h2>Eight Principles Assessment</h2>
+
+<select>
+<option>Interior</option>
+<option>Exterior</option>
+<option>Hot</option>
+<option>Cold</option>
+<option>Excess</option>
+<option>Deficiency</option>
+<option>Yin</option>
+<option>Yang</option>
+</select><br><br>
+
+
+<h2>Zang-Fu Pattern</h2>
+
+<select>
+<option>Liver Qi Stagnation</option>
+<option>Liver Yang Rising</option>
+<option>Spleen Qi Deficiency</option>
+<option>Kidney Yin Deficiency</option>
+<option>Kidney Yang Deficiency</option>
+<option>Heart Blood Deficiency</option>
+<option>Lung Qi Deficiency</option>
+</select><br><br>
+
+
+<button type="submit">Submit Patient Intake</button>
 
 </form>
