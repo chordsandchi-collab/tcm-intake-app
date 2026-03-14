@@ -8,7 +8,7 @@
 
 body{
 font-family:Arial;
-max-width:900px;
+max-width:950px;
 margin:auto;
 padding:20px;
 background:#f4f4f4;
@@ -66,7 +66,7 @@ Name
 Date of Birth
 <input id="dob">
 
-Contact Details
+Primary Contact
 <input id="contact">
 
 Address
@@ -80,7 +80,6 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
 <h2>Main Health Concern</h2>
@@ -89,10 +88,9 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
-<h2>Temperature</h2>
+<h2>Temperature Pattern</h2>
 
 <select id="temperature">
 <option value="">Select</option>
@@ -106,29 +104,25 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
 <h2>Energy Level</h2>
 
 <select id="energy">
-<option value="">Select</option>
-<option>Strong and stable</option>
+<option>Strong</option>
 <option>Low energy</option>
-<option>Energy crashes in afternoon</option>
+<option>Energy crashes afternoon</option>
 <option>Fatigue after eating</option>
 <option>Very weak</option>
 </select>
 
 </div>
 
-
 <div class="section">
 
 <h2>Appetite</h2>
 
 <select id="appetite">
-<option value="">Select</option>
 <option>Poor appetite</option>
 <option>Normal appetite</option>
 <option>Strong appetite</option>
@@ -136,7 +130,6 @@ Occupation
 </select>
 
 </div>
-
 
 <div class="section">
 
@@ -150,7 +143,6 @@ Occupation
 </select>
 
 </div>
-
 
 <div class="section">
 
@@ -166,7 +158,6 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
 <h2>Urination</h2>
@@ -175,12 +166,11 @@ Occupation
 <option>Normal</option>
 <option>Frequent urination</option>
 <option>Night urination</option>
-<option>Dark yellow urine</option>
+<option>Dark urine</option>
 <option>Clear abundant urine</option>
 </select>
 
 </div>
-
 
 <div class="section">
 
@@ -196,7 +186,6 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
 <h2>Pain</h2>
@@ -210,7 +199,6 @@ Occupation
 </select>
 
 </div>
-
 
 <div class="section">
 
@@ -226,7 +214,6 @@ Occupation
 
 </div>
 
-
 <div class="section">
 
 <h2>Thirst</h2>
@@ -241,14 +228,11 @@ Occupation
 
 </div>
 
-
 <button type="button" onclick="analyze()">Submit Intake</button>
 
 </form>
 
-
 <div id="result" class="result" style="display:none"></div>
-
 
 <script>
 
@@ -258,7 +242,6 @@ let liver=0
 let spleen=0
 let kidneyYang=0
 let kidneyYin=0
-let damp=0
 
 let temp=document.getElementById("temperature").value
 let energy=document.getElementById("energy").value
@@ -268,8 +251,6 @@ let bowel=document.getElementById("bowel").value
 let emotion=document.getElementById("emotion").value
 let pain=document.getElementById("pain").value
 let sleep=document.getElementById("sleep").value
-let thirst=document.getElementById("thirst").value
-
 
 if(emotion=="Irritable" || pain=="Tension or tightness") liver++
 
@@ -279,15 +260,10 @@ if(temp=="Often cold" || energy=="Very weak") kidneyYang++
 
 if(temp=="Night sweats" || sleep=="Night sweats during sleep") kidneyYin++
 
-if(bloating=="Often" || bowel=="Loose stools") damp++
-
-
 let result=""
 
 if(liver>=2){
-
 result+=`
-
 <h2>Liver Qi Stagnation</h2>
 
 Example acupuncture points:
@@ -296,15 +272,11 @@ LV3 – Taichong
 LI4 – Hegu  
 GB34 – Yanglingquan  
 PC6 – Neiguan
-
 `
-
 }
 
 if(spleen>=2){
-
 result+=`
-
 <h2>Spleen Qi Deficiency</h2>
 
 Example acupuncture points:
@@ -313,15 +285,11 @@ ST36 – Zusanli
 SP6 – Sanyinjiao  
 CV12 – Zhongwan  
 BL20 – Pishu
-
 `
-
 }
 
 if(kidneyYang>=2){
-
 result+=`
-
 <h2>Kidney Yang Deficiency</h2>
 
 Example acupuncture points:
@@ -330,15 +298,11 @@ KD3 – Taixi
 BL23 – Shenshu  
 DU4 – Mingmen  
 CV4 – Guanyuan
-
 `
-
 }
 
 if(kidneyYin>=2){
-
 result+=`
-
 <h2>Kidney Yin Deficiency</h2>
 
 Example acupuncture points:
@@ -347,17 +311,12 @@ KD6
 SP6  
 KI3  
 REN4
-
 `
-
 }
 
 if(result==""){
-
 result="<h2>No clear pattern detected. A full consultation is recommended.</h2>"
-
 }
-
 
 result+=`
 
@@ -384,7 +343,7 @@ Please schedule an appointment for a comprehensive consultation and personalized
 <p>
 
 Website:<br>
-<a href="https://chordsandchi.com" target="_blank">chordsandchi.com</a>
+<a href="https://chordsandchi.com" target="_blank">https://chordsandchi.com</a>
 
 <br><br>
 
@@ -405,7 +364,6 @@ document.getElementById("result").style.display="block"
 
 
 const data={
-
 email:document.getElementById("email").value,
 name:document.getElementById("name").value,
 dob:document.getElementById("dob").value,
@@ -422,9 +380,7 @@ bowel,
 emotion,
 pain,
 sleep,
-thirst,
 pattern:result
-
 }
 
 fetch("https://script.google.com/macros/s/AKfycbxs6hnnBihs9C5FfxavmOsnJ06nL2bD9Yxy4s_6JRhYaWwaIe0aSTy_qhkqgQH_8Uu8/exec",{
