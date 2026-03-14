@@ -8,7 +8,7 @@
 
 body{
 font-family:Arial;
-max-width:950px;
+max-width:900px;
 margin:auto;
 padding:20px;
 background:#f4f4f4;
@@ -47,10 +47,9 @@ border-radius:8px;
 </style>
 </head>
 
-
 <body>
 
-<h1>CHORDS & CHI – Acupuncture Patient Intake</h1>
+<h1>CHORDS & CHI – Acupuncture Intake</h1>
 
 <form>
 
@@ -61,19 +60,13 @@ border-radius:8px;
 Email Address
 <input id="email">
 
-Appointment Date
-<input id="appointment">
-
-Appointment For
-<input id="appointment_for">
-
 Name
 <input id="name">
 
 Date of Birth
 <input id="dob">
 
-Primary Contact Details
+Contact Details
 <input id="contact">
 
 Address
@@ -99,27 +92,16 @@ Occupation
 
 <div class="section">
 
-<h2>Temperature Pattern</h2>
+<h2>Temperature</h2>
 
 <select id="temperature">
 <option value="">Select</option>
-<option>Cold</option>
-<option>Hot</option>
-<option>Alternating</option>
-</select>
-
-Sweating
-<select id="sweat">
+<option>Often cold</option>
+<option>Cold hands and feet</option>
+<option>Often hot</option>
+<option>Alternating hot and cold</option>
+<option>Night sweats</option>
 <option>Normal</option>
-<option>Excessive</option>
-<option>Very little</option>
-</select>
-
-Thirst
-<select id="thirst">
-<option>None</option>
-<option>Occasional</option>
-<option>Frequent</option>
 </select>
 
 </div>
@@ -127,29 +109,44 @@ Thirst
 
 <div class="section">
 
-<h2>Energy & Vitality</h2>
+<h2>Energy Level</h2>
 
-<textarea id="energy" placeholder="Describe your energy during the day"></textarea>
+<select id="energy">
+<option value="">Select</option>
+<option>Strong and stable</option>
+<option>Low energy</option>
+<option>Energy crashes in afternoon</option>
+<option>Fatigue after eating</option>
+<option>Very weak</option>
+</select>
 
 </div>
 
 
 <div class="section">
 
-<h2>Digestive System</h2>
+<h2>Appetite</h2>
 
-Appetite
 <select id="appetite">
-<option>Poor</option>
-<option>Normal</option>
-<option>Strong</option>
+<option value="">Select</option>
+<option>Poor appetite</option>
+<option>Normal appetite</option>
+<option>Strong appetite</option>
+<option>Hungry but cannot eat much</option>
 </select>
 
-Bloating after meals?
+</div>
+
+
+<div class="section">
+
+<h2>Bloating After Meals</h2>
+
 <select id="bloating">
 <option>No</option>
 <option>Sometimes</option>
 <option>Often</option>
+<option>Severe</option>
 </select>
 
 </div>
@@ -157,31 +154,30 @@ Bloating after meals?
 
 <div class="section">
 
-<h2>Elimination</h2>
+<h2>Bowel Movements</h2>
 
-Urination
-<textarea id="urination"></textarea>
-
-Bowel Movements
-<textarea id="bowel"></textarea>
-
-</div>
-
-
-<div class="section">
-
-<h2>Pain</h2>
-
-<textarea id="pain"></textarea>
+<select id="bowel">
+<option>Normal</option>
+<option>Loose stools</option>
+<option>Diarrhea</option>
+<option>Constipation</option>
+<option>Alternating constipation and diarrhea</option>
+</select>
 
 </div>
 
 
 <div class="section">
 
-<h2>Sleep</h2>
+<h2>Urination</h2>
 
-<textarea id="sleep"></textarea>
+<select id="urination">
+<option>Normal</option>
+<option>Frequent urination</option>
+<option>Night urination</option>
+<option>Dark yellow urine</option>
+<option>Clear abundant urine</option>
+</select>
 
 </div>
 
@@ -190,17 +186,58 @@ Bowel Movements
 
 <h2>Emotional State</h2>
 
-<textarea id="stress"></textarea>
+<select id="emotion">
+<option>Calm</option>
+<option>Stress or anxiety</option>
+<option>Irritable</option>
+<option>Sadness</option>
+<option>Mood swings</option>
+</select>
 
 </div>
 
 
 <div class="section">
 
-<h2>Women's Health</h2>
+<h2>Pain</h2>
 
-Menses Regular?
-<input id="menses">
+<select id="pain">
+<option>No pain</option>
+<option>Dull pain</option>
+<option>Sharp stabbing pain</option>
+<option>Moving pain</option>
+<option>Tension or tightness</option>
+</select>
+
+</div>
+
+
+<div class="section">
+
+<h2>Sleep</h2>
+
+<select id="sleep">
+<option>Sleep well</option>
+<option>Difficulty falling asleep</option>
+<option>Wake frequently</option>
+<option>Wake between 1-3 AM</option>
+<option>Night sweats during sleep</option>
+</select>
+
+</div>
+
+
+<div class="section">
+
+<h2>Thirst</h2>
+
+<select id="thirst">
+<option>No thirst</option>
+<option>Occasional thirst</option>
+<option>Frequent thirst</option>
+<option>Prefer cold drinks</option>
+<option>Prefer warm drinks</option>
+</select>
 
 </div>
 
@@ -222,38 +259,35 @@ let spleen=0
 let kidneyYang=0
 let kidneyYin=0
 let damp=0
-let bloodDef=0
-let liverYang=0
 
 let temp=document.getElementById("temperature").value
+let energy=document.getElementById("energy").value
 let appetite=document.getElementById("appetite").value
-let energy=document.getElementById("energy").value.toLowerCase()
-let stress=document.getElementById("stress").value.toLowerCase()
-let pain=document.getElementById("pain").value.toLowerCase()
-let sleep=document.getElementById("sleep").value.toLowerCase()
+let bloating=document.getElementById("bloating").value
+let bowel=document.getElementById("bowel").value
+let emotion=document.getElementById("emotion").value
+let pain=document.getElementById("pain").value
+let sleep=document.getElementById("sleep").value
+let thirst=document.getElementById("thirst").value
 
-if(stress.includes("stress")||stress.includes("irritable")) liver++
-if(pain.includes("rib")||pain.includes("tension")) liver++
 
-if(appetite=="Poor") spleen++
-if(energy.includes("tired")) spleen++
+if(emotion=="Irritable" || pain=="Tension or tightness") liver++
 
-if(temp=="Cold") kidneyYang++
-if(energy.includes("low")) kidneyYang++
+if(appetite=="Poor appetite" || bloating=="Often" || bowel=="Loose stools") spleen++
 
-if(temp=="Hot") kidneyYin++
-if(sleep.includes("night")) kidneyYin++
+if(temp=="Often cold" || energy=="Very weak") kidneyYang++
 
-if(document.getElementById("bowel").value.includes("loose")) damp++
+if(temp=="Night sweats" || sleep=="Night sweats during sleep") kidneyYin++
 
-if(energy.includes("weak")) bloodDef++
+if(bloating=="Often" || bowel=="Loose stools") damp++
 
-if(pain.includes("headache")) liverYang++
 
 let result=""
 
 if(liver>=2){
+
 result+=`
+
 <h2>Liver Qi Stagnation</h2>
 
 Example acupuncture points:
@@ -262,11 +296,15 @@ LV3 – Taichong
 LI4 – Hegu  
 GB34 – Yanglingquan  
 PC6 – Neiguan
+
 `
+
 }
 
 if(spleen>=2){
+
 result+=`
+
 <h2>Spleen Qi Deficiency</h2>
 
 Example acupuncture points:
@@ -275,11 +313,15 @@ ST36 – Zusanli
 SP6 – Sanyinjiao  
 CV12 – Zhongwan  
 BL20 – Pishu
+
 `
+
 }
 
 if(kidneyYang>=2){
+
 result+=`
+
 <h2>Kidney Yang Deficiency</h2>
 
 Example acupuncture points:
@@ -288,11 +330,15 @@ KD3 – Taixi
 BL23 – Shenshu  
 DU4 – Mingmen  
 CV4 – Guanyuan
+
 `
+
 }
 
 if(kidneyYin>=2){
+
 result+=`
+
 <h2>Kidney Yin Deficiency</h2>
 
 Example acupuncture points:
@@ -301,12 +347,17 @@ KD6
 SP6  
 KI3  
 REN4
+
 `
+
 }
 
 if(result==""){
-result="<h2>No strong pattern detected. A full consultation is recommended.</h2>"
+
+result="<h2>No clear pattern detected. A full consultation is recommended.</h2>"
+
 }
+
 
 result+=`
 
@@ -332,12 +383,8 @@ Please schedule an appointment for a comprehensive consultation and personalized
 
 <p>
 
-<strong>CHORDS & CHI Integrative Acupuncture</strong><br><br>
-
 Website:<br>
-<a href="https://chordsandchi.com" target="_blank">
-https://chordsandchi.com
-</a>
+<a href="https://chordsandchi.com" target="_blank">chordsandchi.com</a>
 
 <br><br>
 
@@ -360,8 +407,6 @@ document.getElementById("result").style.display="block"
 const data={
 
 email:document.getElementById("email").value,
-appointment:document.getElementById("appointment").value,
-appointment_for:document.getElementById("appointment_for").value,
 name:document.getElementById("name").value,
 dob:document.getElementById("dob").value,
 contact:document.getElementById("contact").value,
@@ -370,13 +415,14 @@ gender:document.getElementById("gender").value,
 occupation:document.getElementById("occupation").value,
 concern:document.getElementById("concern").value,
 temperature:temp,
+energy,
 appetite,
-urination:document.getElementById("urination").value,
-bowel:document.getElementById("bowel").value,
+bloating,
+bowel,
+emotion,
 pain,
 sleep,
-energy,
-stress,
+thirst,
 pattern:result
 
 }
