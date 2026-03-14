@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CHORDS & CHI – TCM Intake</title>
+<title>CHORDS & CHI Intake</title>
 
 <style>
 
 body{
 font-family:Arial;
-max-width:950px;
+max-width:900px;
 margin:auto;
 padding:20px;
 background:#f4f4f4;
@@ -21,7 +21,7 @@ margin-bottom:20px;
 border-radius:8px;
 }
 
-input,select,textarea{
+select,input,textarea{
 width:100%;
 padding:8px;
 margin-bottom:15px;
@@ -45,11 +45,12 @@ border-radius:8px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<h1>CHORDS & CHI – Acupuncture Intake</h1>
+<h1>CHORDS & CHI – TCM Intake</h1>
 
 <form>
 
@@ -57,7 +58,7 @@ border-radius:8px;
 
 <h2>Patient Information</h2>
 
-Email Address
+Email
 <input id="email">
 
 Name
@@ -66,7 +67,7 @@ Name
 Date of Birth
 <input id="dob">
 
-Primary Contact
+Contact
 <input id="contact">
 
 Address
@@ -80,6 +81,7 @@ Occupation
 
 </div>
 
+
 <div class="section">
 
 <h2>Main Health Concern</h2>
@@ -88,48 +90,51 @@ Occupation
 
 </div>
 
+
 <div class="section">
 
-<h2>Temperature Pattern</h2>
+<h2>Body Temperature</h2>
 
 <select id="temperature">
-<option value="">Select</option>
+<option>Normal</option>
 <option>Often cold</option>
 <option>Cold hands and feet</option>
 <option>Often hot</option>
-<option>Alternating hot and cold</option>
 <option>Night sweats</option>
-<option>Normal</option>
+<option>Alternating hot and cold</option>
 </select>
 
 </div>
 
+
 <div class="section">
 
-<h2>Energy Level</h2>
+<h2>Energy</h2>
 
 <select id="energy">
 <option>Strong</option>
 <option>Low energy</option>
-<option>Energy crashes afternoon</option>
+<option>Energy crash afternoon</option>
 <option>Fatigue after eating</option>
 <option>Very weak</option>
 </select>
 
 </div>
 
+
 <div class="section">
 
 <h2>Appetite</h2>
 
 <select id="appetite">
-<option>Poor appetite</option>
 <option>Normal appetite</option>
+<option>Poor appetite</option>
 <option>Strong appetite</option>
 <option>Hungry but cannot eat much</option>
 </select>
 
 </div>
+
 
 <div class="section">
 
@@ -143,6 +148,7 @@ Occupation
 </select>
 
 </div>
+
 
 <div class="section">
 
@@ -158,6 +164,7 @@ Occupation
 
 </div>
 
+
 <div class="section">
 
 <h2>Urination</h2>
@@ -171,6 +178,7 @@ Occupation
 </select>
 
 </div>
+
 
 <div class="section">
 
@@ -186,19 +194,21 @@ Occupation
 
 </div>
 
+
 <div class="section">
 
-<h2>Pain</h2>
+<h2>Pain Type</h2>
 
 <select id="pain">
 <option>No pain</option>
 <option>Dull pain</option>
 <option>Sharp stabbing pain</option>
 <option>Moving pain</option>
-<option>Tension or tightness</option>
+<option>Tension tightness</option>
 </select>
 
 </div>
+
 
 <div class="section">
 
@@ -208,31 +218,20 @@ Occupation
 <option>Sleep well</option>
 <option>Difficulty falling asleep</option>
 <option>Wake frequently</option>
-<option>Wake between 1-3 AM</option>
-<option>Night sweats during sleep</option>
+<option>Wake 1-3 AM</option>
+<option>Night sweats</option>
 </select>
 
 </div>
 
-<div class="section">
-
-<h2>Thirst</h2>
-
-<select id="thirst">
-<option>No thirst</option>
-<option>Occasional thirst</option>
-<option>Frequent thirst</option>
-<option>Prefer cold drinks</option>
-<option>Prefer warm drinks</option>
-</select>
-
-</div>
 
 <button type="button" onclick="analyze()">Submit Intake</button>
 
 </form>
 
+
 <div id="result" class="result" style="display:none"></div>
+
 
 <script>
 
@@ -251,72 +250,47 @@ let bowel=document.getElementById("bowel").value
 let emotion=document.getElementById("emotion").value
 let pain=document.getElementById("pain").value
 let sleep=document.getElementById("sleep").value
+let urine=document.getElementById("urination").value
 
-if(emotion=="Irritable" || pain=="Tension or tightness") liver++
 
-if(appetite=="Poor appetite" || bloating=="Often" || bowel=="Loose stools") spleen++
+if(emotion=="Irritable") liver+=2
+if(emotion=="Mood swings") liver+=1
+if(pain=="Tension tightness") liver+=2
+if(sleep=="Wake 1-3 AM") liver+=1
 
-if(temp=="Often cold" || energy=="Very weak") kidneyYang++
 
-if(temp=="Night sweats" || sleep=="Night sweats during sleep") kidneyYin++
+if(appetite=="Poor appetite") spleen+=2
+if(bloating=="Often") spleen+=2
+if(bowel=="Loose stools") spleen+=2
+if(energy=="Fatigue after eating") spleen+=2
 
-let result=""
 
-if(liver>=2){
-result+=`
-<h2>Liver Qi Stagnation</h2>
+if(temp=="Often cold") kidneyYang+=2
+if(temp=="Cold hands and feet") kidneyYang+=1
+if(energy=="Very weak") kidneyYang+=2
+if(urine=="Night urination") kidneyYang+=1
 
-Example acupuncture points:
 
-LV3 – Taichong  
-LI4 – Hegu  
-GB34 – Yanglingquan  
-PC6 – Neiguan
-`
+if(temp=="Night sweats") kidneyYin+=2
+if(sleep=="Night sweats") kidneyYin+=1
+
+
+let patterns=[
+{name:"Liver Qi Stagnation",score:liver,points:"LV3, LI4, GB34, PC6"},
+{name:"Spleen Qi Deficiency",score:spleen,points:"ST36, SP6, CV12, BL20"},
+{name:"Kidney Yang Deficiency",score:kidneyYang,points:"KD3, BL23, DU4, CV4"},
+{name:"Kidney Yin Deficiency",score:kidneyYin,points:"KD6, SP6, KI3, REN4"}
+]
+
+patterns.sort((a,b)=>b.score-a.score)
+
+let result="<h2>Pattern Tendencies</h2>"
+
+for(let i=0;i<3;i++){
+result+=`<p><b>${patterns[i].name}</b> – Score ${patterns[i].score}<br>
+Example acupuncture points: ${patterns[i].points}</p>`
 }
 
-if(spleen>=2){
-result+=`
-<h2>Spleen Qi Deficiency</h2>
-
-Example acupuncture points:
-
-ST36 – Zusanli  
-SP6 – Sanyinjiao  
-CV12 – Zhongwan  
-BL20 – Pishu
-`
-}
-
-if(kidneyYang>=2){
-result+=`
-<h2>Kidney Yang Deficiency</h2>
-
-Example acupuncture points:
-
-KD3 – Taixi  
-BL23 – Shenshu  
-DU4 – Mingmen  
-CV4 – Guanyuan
-`
-}
-
-if(kidneyYin>=2){
-result+=`
-<h2>Kidney Yin Deficiency</h2>
-
-Example acupuncture points:
-
-KD6  
-SP6  
-KI3  
-REN4
-`
-}
-
-if(result==""){
-result="<h2>No clear pattern detected. A full consultation is recommended.</h2>"
-}
 
 result+=`
 
@@ -330,9 +304,9 @@ These impressions are generated automatically based on the answers you provided 
 
 They do not constitute a medical diagnosis or treatment plan.
 
-Traditional Chinese Medicine diagnosis requires in-person evaluation including tongue observation, pulse palpation, and clinical assessment by a licensed acupuncture or TCM practitioner.
+Traditional Chinese Medicine diagnosis requires in-person evaluation including tongue observation, pulse palpation, and clinical assessment by a licensed acupuncture practitioner.
 
-Please schedule an appointment for a comprehensive consultation and personalized acupuncture treatment plan.
+Please schedule an appointment for a full consultation.
 
 </p>
 
@@ -342,18 +316,22 @@ Please schedule an appointment for a comprehensive consultation and personalized
 
 <p>
 
-Website:<br>
-<a href="https://chordsandchi.com" target="_blank">https://chordsandchi.com</a>
+Phone / Viber / WhatsApp / Telegram<br>
+<b>0916-829-8698</b>
 
 <br><br>
 
-Email:<br>
-info@chordsandchi.com
+Website<br>
+<a href="https://chordsandchi.com" target="_blank">chordsandchi.com</a>
 
 <br><br>
 
-Location:<br>
-Makati / Laguna Area – Philippines
+Locations<br>
+
+Mandaluyong  
+Marikina  
+Quezon City  
+Laguna – Philippines
 
 </p>
 
@@ -361,6 +339,7 @@ Makati / Laguna Area – Philippines
 
 document.getElementById("result").innerHTML=result
 document.getElementById("result").style.display="block"
+
 
 
 const data={
@@ -383,7 +362,7 @@ sleep,
 pattern:result
 }
 
-fetch("https://script.google.com/macros/s/AKfycbxXVkJjqY9pzVkm4SWDyxn5tXITc0sVgIZ5PNMragTWSic0nEPUAfEu8CBFJPid7sts/exec",{
+fetch("https://script.google.com/macros/s/AKfycbxs6hnnBihs9C5FfxavmOsnJ06nL2bD9Yxy4s_6JRhYaWwaIe0aSTy_qhkqgQH_8Uu8/exec",{
 method:"POST",
 body:JSON.stringify(data)
 })
